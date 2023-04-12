@@ -3,6 +3,26 @@ import time
 from pprint import pprint
 from func_utils import format_number
 
+#is open positions
+def  is_open_positions(client,market):
+    #protect API
+    time.sleep(0.2)
+    #get positions
+    all_positions=client.private.get_positions(
+        market=market,
+        status="OPEN"
+    )
+    #determine is open
+    if len(all_positions.data["positions"]) >0 :
+        return True
+    else :
+        return False
+    
+#ceck orders
+def ceck_order_status(client,order_id):
+    order=client.privete.get_order_by_id(order_id)
+    return order.data["order"]["status"]
+
 #place market order
 def place_market_order (client,market,side,size,price,reduce_only):
     #get position id
