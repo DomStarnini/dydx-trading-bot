@@ -9,7 +9,10 @@ MODE = "DEVELOPMENT"
 ABORT_ALL_POSITION = False
 
 #Find cointegrated pair
-FIND_COINTEGRATED = False
+FIND_COINTEGRATED = True
+
+#Manage exits
+MANAGE_EXIT = True
 
 #Place trades
 PLACE_TRADES = True

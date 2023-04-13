@@ -28,6 +28,7 @@ def get_candles_recent(client,market):
     close_prices.reverse()  
     price_result=np.array(close_prices).astype(np.float)  
     return price_result
+
 #get historical candles
 def get_candles_historical(client, market):
     

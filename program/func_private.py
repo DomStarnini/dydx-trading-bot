@@ -19,9 +19,12 @@ def  is_open_positions(client,market):
         return False
     
 #ceck orders
-def ceck_order_status(client,order_id):
-    order=client.privete.get_order_by_id(order_id)
-    return order.data["order"]["status"]
+def check_order_status(client,order_id):
+    order=client.private.get_order_by_id(order_id)
+    if order.data :
+        if "order" in order.data.keys():
+            return order.data["order"]["status"]
+    return "FAILED"
 
 #place market order
 def place_market_order (client,market,side,size,price,reduce_only):
@@ -62,7 +65,7 @@ def abort_all_positions(client):
     #get all open position
     positions=client.private.get_positions(status="OPEN")
     all_positions=positions.data["positions"]
-    print(all_positions)
+    #print(all_positions)
     #handle positons
     close_orders=[]
     if len(all_positions)>0:

@@ -14,8 +14,15 @@ def open_positions(client):
     df = pd.read_csv("cointegrated_pairs.csv")
     #get market for referencing
     markets=client.public.get_markets().data
-    
-    bot_agents=[]
+    bot_agents = []
+    # Opening JSON file
+    try:
+        open_positions_file = open("bot_agents.json")
+        open_positions_dict = json.load(open_positions_file)
+        for p in open_positions_dict:
+         bot_agents.append(p)
+    except:
+      bot_agents = []
     #zscore triggers
     for index,row in df.iterrows():
         #get variables
@@ -86,6 +93,41 @@ def open_positions(client):
                         if free_collateral < USD_MIN_COLLATERAL :
                             break
                         
-                        print(base_market,base_side,base_size,accept_base_price)
-                        print(quote_market,quote_side,quote_size,accept_quote_price)
-                        exit(1)
+                        #create bot agent
+                        bot_agent = BotAgent(
+                            client,
+                            market_1=base_market,
+                            market_2=quote_market,
+                            base_side=base_side,
+                            base_size=base_size,
+                            base_price=accept_base_price,
+                            quote_side=quote_side,
+                            quote_size=quote_size,
+                            quote_price=accept_quote_price,
+                            accept_failsafe_base_price=accept_failsafe_base_price,
+                            z_score=zscore,
+                            half_life=half_life,
+                            hedge_ratio=hedge_ratio
+                        )
+                        
+                        #open trade
+                        bot_open_dict = bot_agent.open_trades()
+                        
+                        # Guard: Handle failure
+                        if bot_open_dict == "failed":
+                           continue
+                        
+                        # Handle success in opening trades
+                        if bot_open_dict["pair_status"] == "LIVE":
+                           # Append to list of bot agents
+                           bot_agents.append(bot_open_dict)
+                           del(bot_open_dict)
+                           # Confirm live status in print
+                           print("Trade status: Live")
+                           print("---")
+                            
+    # Save agents
+    print(f"Success: Manage open trades checked")
+    if len(bot_agents) > 0:
+        with open("bot_agents.json", "w") as f:
+         json.dump(bot_agents, f)
