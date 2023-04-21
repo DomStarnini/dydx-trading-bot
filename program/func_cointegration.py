@@ -47,7 +47,7 @@ def calculate_cointegration (series_1,series_2):
     return coint_flag, hedge_ratio, half_life
 
 #store cointegration result
-def store_cointegration_result(df_market_prices):
+def store_cointegration_results(df_market_prices):
     
     #initialize
     markets = df_market_prices.columns.to_list()
@@ -61,16 +61,16 @@ def store_cointegration_result(df_market_prices):
         for quote_market in markets[index + 1:]:
             series_2 = df_market_prices[quote_market].values.astype(float).tolist()
         #ceck cointegration
-        coint_flag, hedge_ratio, half_life = calculate_cointegration(series_1, series_2)
+            coint_flag, hedge_ratio, half_life = calculate_cointegration(series_1, series_2)
         #log pair
-        if coint_flag == 1 and half_life <= MAX_HALF_LIFE and half_life > 0:
-            print(base_market)
-            criteria_met_pairs.append({
-                "base_market" : base_market,
-                "quote_market" : quote_market,
-                "hedge_ratio" : hedge_ratio,
-                "half_life" : half_life,
-                })
+            if coint_flag == 1 and half_life <= MAX_HALF_LIFE and half_life > 0:
+                print(base_market)
+                criteria_met_pairs.append({
+                    "base_market" : base_market,
+                    "quote_market" : quote_market,
+                    "hedge_ratio" : hedge_ratio,
+                    "half_life" : half_life,
+                    })
     #create and save dataframe
     df_criteria_met = pd.DataFrame(criteria_met_pairs)
     df_criteria_met.to_csv("cointegrated_pairs.csv")
