@@ -19,7 +19,7 @@ if __name__=="__main__":
     except Exception as e:
         print(e)
         print("Errore di connessione : ",e) 
-        send_message("Errore di connessione: ", {e})   
+        send_message("Errore di connessione:  {e}")   
         exit(1)
     
     
@@ -30,7 +30,7 @@ if ABORT_ALL_POSITION :
         close_orders=abort_all_positions(client)
     except Exception as e:
         print("Errore di chiusura posizioni : ",e) 
-        send_message("Errore di chiusura delle posizioni: ", {e})   
+        send_message("Errore di chiusura delle posizioni:  {e}")   
         exit(1)   
     
         
@@ -42,7 +42,7 @@ if FIND_COINTEGRATED :
         df_market_prices = construct_market_prices(client)
     except Exception as e:
         print("Errore di costruzione prezzi di mercato : ",e)  
-        send_message("Errore di costruzione prezzi di mercato : ", {e})    
+        send_message("Errore di costruzione prezzi di mercato :  {e}")    
         exit(1)  
         
     # Store Cointegrated Pairs
@@ -65,7 +65,7 @@ while True:
             manage_trade_exits(client)
         except Exception as e:
             print("Errore nel gestire le uscite : ",e) 
-            send_message("Errore nel gestire le uscite : ", {e})     
+            send_message("Errore nel gestire le uscite :  {e}")     
             exit(1)            
             
     #place trades for opening positions
@@ -75,5 +75,5 @@ while True:
             open_positions(client)
         except Exception as e:
             print("Errore nel trovare pairs : ",e)
-            send_message("Errore nel trovare pairs : ", {e})      
+            send_message("Errore nel trovare pairs : {e}")      
             exit(1)      
