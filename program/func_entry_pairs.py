@@ -54,8 +54,8 @@ def open_positions(client):
                     #calcola un prezzo accettabile
                     base_price = series1[-1] 
                     quote_price = series2[-1]   
-                    accept_base_price = float(base_price) *1.01 if zscore < 0 else float(base_price) *0.99
-                    accept_quote_price = float(quote_price) *1.01 if zscore > 0 else float(quote_price) *0.99
+                    accept_base_price = float(base_price)  if zscore < 0 else float(base_price) *0.99
+                    accept_quote_price = float(quote_price) if zscore > 0 else float(quote_price) *0.99
                     failsafe_base_price = float(base_price) *0.05 if zscore < 0 else float(base_price) *1.7
                     base_tick_size=markets["markets"][base_market]["tickSize"]
                     quote_tick_size=markets["markets"][quote_market]["tickSize"]

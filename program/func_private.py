@@ -41,7 +41,7 @@ def place_market_order (client,market,side,size,price,reduce_only):
     order_type="MARKET",
     post_only=False,
     size=size,
-    price=price*0.9,
+    price=price,
     limit_fee='0.015',
     expiration_epoch_seconds=time.time() + 500,
     time_in_force="FOK",
