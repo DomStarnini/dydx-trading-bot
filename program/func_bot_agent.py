@@ -199,7 +199,7 @@ class BotAgent:
           send_message("Failed to execute. Code red. Error code: 100")
 
           # ABORT
-          exit(1)
+          #exit(1)
       except Exception as e:
         self.order_dict["pair_status"] = "ERROR"
         self.order_dict["comments"] = f"Close Market 1 {self.market_1}: , {e}"
@@ -211,7 +211,7 @@ class BotAgent:
         send_message("Failed to execute. Code red. Error code: 101")
 
         # ABORT
-        exit(1)
+        #exit(1)
 
     # Return success result
     else:

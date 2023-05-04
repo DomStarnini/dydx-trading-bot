@@ -5,7 +5,7 @@ from func_utils import format_number
 import json
 
 #is open positions
-def  is_open_positions(client,market):
+def is_open_positions(client,market):
     #protect API
     time.sleep(0.2)
     #get positions
